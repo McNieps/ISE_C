@@ -12,7 +12,7 @@ select = [
   "UP",  # pyupgrade
   "C90", # mccabe (complex names)
   "N",   # pep-8 naming
-  "ANN", # annotations
+  # "ANN", # annotations
   "S",   # bandit
   "B",   # bugbear
   "A",   # builtin
