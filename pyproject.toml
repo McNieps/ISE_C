@@ -1,0 +1,25 @@
+[project]
+# Support Python 3.10+.
+requires-python = ">=3.10"
+
+[tool.ruff]
+# Decrease the maximum line length to 79 characters.
+line-length = 120
+src = ["ise_c"]
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "UP",  # pyupgrade
+  "C90", # mccabe (complex names)
+  "N",   # pep-8 naming
+  "ANN", # annotations
+  "S",   # bandit
+  "B",   # bugbear
+  "A",   # builtin
+  "COM", # Commas
+  "C4",  # list comprehension
+  "RET", # return
+  "SIM", # simplify
+  "ARG", # unused arguments
+
+]
