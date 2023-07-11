@@ -1,7 +1,6 @@
 import pygame
 
-from typing import Iterable
-from ise_c.environment.location.errors_loc import InvalidLocationKwargs
+from collections.abc import Iterable
 
 
 class StaticLoc:

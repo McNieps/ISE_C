@@ -1,6 +1,7 @@
 [project]
 # Support Python 3.10+.
 requires-python = ">=3.10"
+name = "ISE_C"
 
 [tool.ruff]
 # Decrease the maximum line length to 79 characters.
@@ -20,6 +21,6 @@ select = [
   "C4",  # list comprehension
   "RET", # return
   "SIM", # simplify
-  "ARG", # unused arguments
+  # "ARG", # unused arguments
 
 ]
