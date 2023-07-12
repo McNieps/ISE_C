@@ -1,58 +1,54 @@
-# HELLO WORLD!
+# ICE-C Engine
+
+Salut la team ! 20 petites secondes pour vous mettre bien comme d'habitude 🤙 😎
 
 # Overview
 ```mermaid
 graph TD
-    ISE-C --> Environment;
-    ISE-C --> Instance;
+    ise-c --> environment
+    ise-c --> app
+    ise-c --> instance
+    
 ```
 
-# Environment
-## Actor
+## Environment
 ```mermaid
 graph TD
-    Actor --> Apparence;
-    Actor --> Location;
-
-    Location --> SimplePhysics
-    Location --> AdvancedPhysics
-    Location --> PymunkPhysics
-        
-    Appearance --> Sprite
-    Appearance --> ClusterizedSprite
-    Appearance --> AnimatedSprite
-    Appearance --> Effects
+    environment --> container
+    container --> container_2d
+    container --> container_parallax
+    container --> container_3d
+    
+    environment --> camera
+    camera --> camera_2d
+    camera --> camera_parallax
+    camera --> camera_3d
+    
+    environment --> location
+    location --> simple_physics
+    location --> advanced_physics
+    location --> pymunk_physics
+    
+    environment --> appearance
+    appearance --> simple_sprite
+    appearance --> animated_sprite
+    appearance --> effect_sprite
 ```
 
-
-
-
-###### Save, don't mind
+## App
 ```mermaid
 graph TD
-    Environment --> Scene;
-    Environment --> Actor;
+    app --> handlers
+    handlers --> loop_handler
+    handlers --> data_handler
     
-    Scene --> Updatable
-    Scene --> Renderable
-    
-    Updatable --> si_physic
-    Updatable --> ad_physic
-    Updatable --> pm_physic
-    
-    Renderable --> fixed
-    Renderable --> clusterized
-    Renderable --> animated
-    
-    Actor --> Apparence;
-    Actor --> Location;
+    app --> application
+```
 
-    Location --> SimplePhysics
-    Location --> AdvancedPhysics
-    Location --> PymunkPhysics
-        
-    Appearance --> Sprite
-    Appearance --> ClusterizedSprite
-    Appearance --> AnimatedSprite
-    Appearance --> Effects
+## Instance
+```mermaid
+graph TD
+    instance --> splash_screen
+    instance --> basic_loop
+    instance --> loading_loop
 ```
