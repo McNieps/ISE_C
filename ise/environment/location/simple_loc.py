@@ -1,7 +1,7 @@
 import pygame
 
 from collections.abc import Iterable
-from ise_c.environment.location.static_loc import StaticLoc
+from ise.environment.location.static_loc import StaticLoc
 
 
 class SimpleLoc(StaticLoc):
