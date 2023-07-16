@@ -28,7 +28,7 @@ class LoopHandler:
 
     @classmethod
     def limit_and_get_delta(cls,
-                            fps: int = None):
+                            fps: int):
 
         cls._delta = cls._clock.tick(fps)/1000
         return cls._delta

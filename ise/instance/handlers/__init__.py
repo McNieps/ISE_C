@@ -1,4 +1,4 @@
-from ise.instance.handlers.instance_handler import InstanceHandler
 from ise.instance.handlers.loop_handler import LoopHandler
+from ise.instance.handlers.event_handler import EventHandler
 
-__all__ = [InstanceHandler, LoopHandler]
+__all__ = [EventHandler, LoopHandler]
