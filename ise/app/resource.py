@@ -51,12 +51,8 @@ class Resource:
         if cls._default_assets_directory is not None:
             return
 
-        if "\\" in __file__:
-            list_path = str(__file__).split("\\")
-        else:
-            list_path = str(__file__).split("/")
+        list_path = str(__file__).split("\\") if "\\" in __file__ else str(__file__).split("/")
 
-        print(f"{__file__=}")
         cls._default_assets_directory = "/".join(list_path[:list_path.index("ise")]) + "/assets/"
 
     @classmethod
