@@ -20,6 +20,15 @@ class StaticLoc:
         else:
             self.position = pygame.math.Vector2(0, 0)
 
+    def update(self,
+               delta: float) -> None:
+        """
+        Update location.
+
+        Nothing will happen because this location is static.
+        """
+        return
+
     @property
     def x(self):
         return self.position[0]

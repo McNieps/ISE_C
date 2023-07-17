@@ -11,15 +11,11 @@ class SimpleLoc(StaticLoc):
     Feature:
         - x  y   position
         - vx vy  speed
-        - a      angle
-        - va     angular speed
     """
 
     def __init__(self,
                  position: Iterable = None,
                  speed: Iterable = None,
-                 a: float = 0,
-                 va: float = 0,
                  **kwargs):
 
         super().__init__(position, **kwargs)
@@ -29,8 +25,15 @@ class SimpleLoc(StaticLoc):
         else:
             self.speed = pygame.math.Vector2(0, 0)
 
-        self.a = a
-        self.va = va
+    def update(self,
+               delta: float) -> None:
+        """
+        Update location.
+
+        The position will change because of speed.
+        """
+
+        self.position += self.speed * delta
 
     @property
     def vx(self):
