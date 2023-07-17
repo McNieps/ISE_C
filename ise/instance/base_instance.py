@@ -1,6 +1,6 @@
 import asyncio
 
-from ise.instance.handlers.loop_handler import LoopHandler
+from ise.instance.handlers import LoopHandler
 
 
 class BaseInstance:
