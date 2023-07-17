@@ -12,9 +12,12 @@ class BaseInstance:
         return
 
     async def loop(self):
-        print("EMPTY LOOP. BASEINSTANCE LOOP METHOD MUST BE OVERRIDDEN.")
+        return
 
-    async def run(self):
+    async def finish(self):
+        return
+
+    async def execute(self):
         await self.setup()
         LoopHandler.stack.append(self)
 
@@ -22,3 +25,5 @@ class BaseInstance:
             LoopHandler.limit_and_get_delta(self.fps)
             await self.loop()
             await asyncio.sleep(0)
+
+        await self.finish()

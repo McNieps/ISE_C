@@ -7,7 +7,7 @@ from ise.instance.splash_screen import Splash
 async def main():
     App.init("assets/")
     x = Splash()
-    await x.run()
+    await x.execute()
 
 
 asyncio.run(main())

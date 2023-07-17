@@ -26,7 +26,7 @@ class Splash(BaseInstance):
 
                 else:
                     x = Splash()
-                    await x.run()
+                    await x.execute()
 
         rect = pygame.Rect(0, 0, 40, 40)
         rect.center = (200+180*math.cos(time.time()), 150+130*math.sin(time.time()))
