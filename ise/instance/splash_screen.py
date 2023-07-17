@@ -1,6 +1,7 @@
 import pygame
 import time
 import math
+import random
 
 from ise.instance.handlers import LoopHandler
 from ise.instance.base_instance import BaseInstance
@@ -10,29 +11,26 @@ class Splash(BaseInstance):
     def __init__(self):
         super().__init__()
         self.window = pygame.display.get_surface()
-        self.launch()
+        self.rect_color = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
 
-    def loop(self):
+    async def setup(self):
+        return
+
+    async def loop(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 LoopHandler.stop_game()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    print("QUITTING GAME")
-                    LoopHandler.stop_game()
+                    LoopHandler.stop_instance(self)
+
                 else:
-                    print(event.key)
+                    x = Splash()
+                    await x.run()
 
         rect = pygame.Rect(0, 0, 40, 40)
-        rect.center = (200+50*math.cos(time.time()), 150)
+        rect.center = (200+180*math.cos(time.time()), 150+130*math.sin(time.time()))
         self.window.fill((0, 0, 0))
-        pygame.draw.rect(self.window, (255, 255, 255), rect)
+        pygame.draw.rect(self.window, self.rect_color, rect)
 
         pygame.display.flip()
-
-
-if __name__ == '__main__':
-    from ise.app.app import App
-
-    App.init("", default_only=True)
-    Splash()

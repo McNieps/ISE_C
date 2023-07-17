@@ -1,42 +1,53 @@
 import pygame
-import asyncio
 import sys
+
+from ise.ise_error import InvalidInstanceError
 
 
 class LoopHandler:
-    stack: list[str] = []
+    stack: list = []
+    delta: float = 0
 
     _clock: pygame.time.Clock = pygame.time.Clock()
-    _run: bool = True
-    _delta: float = 0
 
     @classmethod
-    def launch_instance(cls,
-                        instance) -> None:
+    def is_running(cls,
+                   instance) -> bool:
 
-        cls.stack.append(instance.__class__.__name__)
-        asyncio.run(instance.run())
-        cls.stack.pop(-1)
-
-    @classmethod
-    def is_running(cls):
-        if cls._run is False:
-            cls._run = True
-            return False
-
-        return True
+        return cls.stack[-1] == instance
 
     @classmethod
     def limit_and_get_delta(cls,
                             fps: int):
 
-        cls._delta = cls._clock.tick(fps)/1000
-        return cls._delta
+        cls.delta = cls._clock.tick(fps) / 1000
+        pygame.display.set_caption(f"{cls._clock.get_fps():.1f} - "
+                                   f"{len(cls.stack)} - "
+                                   f"{str([inst.__class__.__name__ for inst in cls.stack])}")
+        return cls.delta
 
     @classmethod
-    def stop_instance(cls) -> None:
-        cls._run = False
+    def stop_instance(cls, instance) -> None:
+        cls.stack.remove(instance)
+        if len(cls.stack) == 0:
+            cls.stop_game()
 
     @classmethod
     def stop_game(cls):
         sys.exit()
+
+    @classmethod
+    def return_to_instance_id(cls, instance):
+        if instance not in cls.stack:
+            raise InvalidInstanceError(f"{instance} is not in the stack.")
+
+        cls.stack = cls.stack[:cls.stack.index(instance)+1]
+
+    @classmethod
+    def return_to_instance_name(cls, instance_name: str):
+        for instance in reversed(cls.stack):
+            if instance.__class__.__name__ == instance_name:
+                cls.return_to_instance_id(instance)
+                return
+
+        raise InvalidInstanceError(f"There is no instance in stack with name: {instance_name}")

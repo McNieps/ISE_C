@@ -8,14 +8,17 @@ class BaseInstance:
         self.fps = 60
         self.delta = 0
 
-    def launch(self):
-        LoopHandler.launch_instance(self)
+    async def setup(self):
+        return
 
-    def loop(self):
-        print("EMPTY LOOP. BASEINSTANCE LOOP METHOD MUST BE OVERRIDED.")
+    async def loop(self):
+        print("EMPTY LOOP. BASEINSTANCE LOOP METHOD MUST BE OVERRIDDEN.")
 
     async def run(self):
-        while LoopHandler.is_running():
-            self.delta = LoopHandler.limit_and_get_delta(self.fps)
-            self.loop()
+        await self.setup()
+        LoopHandler.stack.append(self)
+
+        while LoopHandler.is_running(self):
+            LoopHandler.limit_and_get_delta(self.fps)
+            await self.loop()
             await asyncio.sleep(0)
