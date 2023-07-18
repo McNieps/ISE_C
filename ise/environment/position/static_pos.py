@@ -3,12 +3,12 @@ import pygame
 from collections.abc import Iterable
 
 
-class StaticLoc:
+class StaticPos:
     """
     A very simple class used to position a sprite inside a space.
 
     Feature:
-        - x y  position
+        - x y  position.
     """
 
     def __init__(self,
@@ -23,9 +23,9 @@ class StaticLoc:
     def update(self,
                delta: float) -> None:
         """
-        Update location.
+        Update position.
 
-        Nothing will happen because this location is static.
+        Nothing will happen because this position is static.
         """
         return
 
@@ -39,6 +39,6 @@ class StaticLoc:
 
 
 if __name__ == '__main__':
-    x = StaticLoc(position=(0, 5))
+    x = StaticPos(position=(0, 5))
     print(x.x)
     print(x.y)

@@ -1,22 +1,22 @@
 import pygame
 
 from collections.abc import Iterable
-from ise.environment.location.simple_loc import SimpleLoc
+from ise.environment.position.simple_pos import SimplePos
 
 
-class AdvancedLocation(SimpleLoc):
+class AdvancedPos(SimplePos):
     """
     An advanced class used to position a sprite inside a space.
 
     Feature:
-        - x  y   position
-        - vx vy  speed
-        - ax ay  acceleration
-        - a      angle
-        - va     angular speed
-        - aa     angular acceleration
-        - damp   vx, vy damping
-        - a damp angular damping
+        - x  y   position.
+        - vx vy  speed.
+        - ax ay  acceleration.
+        - a      angle.
+        - va     angular speed.
+        - aa     angular acceleration.
+        - damp   vx, vy damping.
+        - a damp angular damping.
     """
 
     def __init__(self,
@@ -47,7 +47,7 @@ class AdvancedLocation(SimpleLoc):
     def update(self,
                delta: float) -> None:
         """
-        Update location.
+        Update position.
 
         The position will change because of speed.
         The speed will change because of acceleration and damping.

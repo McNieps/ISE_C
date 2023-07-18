@@ -1,16 +1,16 @@
 import pygame
 
 from collections.abc import Iterable
-from ise.environment.location.static_loc import StaticLoc
+from ise.environment.position.static_pos import StaticPos
 
 
-class SimpleLoc(StaticLoc):
+class SimplePos(StaticPos):
     """
     A basic class used to position a sprite inside a space.
 
     Feature:
-        - x  y   position
-        - vx vy  speed
+        - x  y   position.
+        - vx vy  speed.
     """
 
     def __init__(self,
@@ -28,7 +28,7 @@ class SimpleLoc(StaticLoc):
     def update(self,
                delta: float) -> None:
         """
-        Update location.
+        Update position.
 
         The position will change because of speed.
         """
@@ -45,6 +45,6 @@ class SimpleLoc(StaticLoc):
 
 
 if __name__ == '__main__':
-    x = StaticLoc(position=(0, 5))
+    x = StaticPos(position=(0, 5))
     print(x.x)
     print(x.y)
