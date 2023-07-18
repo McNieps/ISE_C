@@ -6,6 +6,7 @@ from ise.ise_typing import PathLike
 
 class App:
     window: pygame.Surface = None
+    window_rect: pygame.Rect = None
 
     @classmethod
     def init(cls,
@@ -36,18 +37,14 @@ class App:
         window_size = Resource.data["engine"]["window"]["size"]
         window_flag = Resource.data["engine"]["window"]["scaled"] * pygame.SCALED
         window_flag |= Resource.data["engine"]["window"]["fullscreen"] * pygame.FULLSCREEN
-
         cls.window = pygame.display.set_mode(window_size, window_flag)
-
+        cls.window_rect = cls.window.get_rect()
         pygame.display.set_caption(Resource.data["engine"]["window"]["name"])
 
     @classmethod
     def _set_window_icon(cls) -> None:
         icon_loc = Resource.data["engine"]["window"]["icon"]
-
         icon = Resource.image
         for key in icon_loc:
             icon = icon[key]
-
         pygame.display.set_icon(icon)
-
