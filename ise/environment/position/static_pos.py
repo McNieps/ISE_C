@@ -2,8 +2,10 @@ import pygame
 
 from collections.abc import Iterable
 
+from ise.environment.position.pos import Pos
 
-class StaticPos:
+
+class StaticPos(Pos):
     """
     A very simple class used to position a sprite inside a space.
 
@@ -16,9 +18,11 @@ class StaticPos:
                  **kwargs):
 
         if position is not None:
-            self.position = pygame.math.Vector2(*position)
+            position = pygame.math.Vector2(*position)
         else:
-            self.position = pygame.math.Vector2(0, 0)
+            position = pygame.math.Vector2(0, 0)
+
+        super().__init__(position=position)
 
     def update(self,
                delta: float) -> None:
