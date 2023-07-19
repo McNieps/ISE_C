@@ -57,7 +57,9 @@ class AdvancedPos(SimplePos):
         """
 
         self.speed += self.acceleration * delta
-        self.speed.scale_to_length(self.speed.magnitude()*self.damping**delta)
+
+        if self.speed.magnitude():
+            self.speed.scale_to_length(self.speed.magnitude()*self.damping**delta)
 
         self.va += self.aa * delta
         self.va *= self.a_damping ** delta

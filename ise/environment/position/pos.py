@@ -1,5 +1,7 @@
 from collections.abc import Iterable
 
+import pygame
+
 
 class Pos:
     """
@@ -9,18 +11,18 @@ class Pos:
     __slots__ = ["position", "speed", "accel", "damping", "a", "va", "aa", "a_damping"]
 
     def __init__(self,
-                 position: Iterable = None,
-                 speed: Iterable = None,
-                 accel: Iterable = None,
+                 position: Iterable = (0, 0),
+                 speed: Iterable = (0, 0),
+                 accel: Iterable = (0, 0),
                  damping: float = 1,
                  a: float = 0,
                  va: float = 0,
                  aa: float = 0,
                  a_damping: float = 1) -> None:
 
-        self.position = position
-        self.speed = speed
-        self.accel = accel
+        self.position: pygame.Vector2 = pygame.Vector2(*position)
+        self.speed: pygame.Vector2 = pygame.Vector2(*speed)
+        self.accel: pygame.Vector2 = pygame.Vector2(*accel)
         self.damping = damping
 
         self.a = a

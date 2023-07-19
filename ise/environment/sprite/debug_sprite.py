@@ -10,9 +10,9 @@ class DebugSprite(SimpleSprite):
         surface = pygame.Surface((radius*2+1, radius*2+1))
         surface.set_colorkey((0, 0, 0))
 
-        pygame.draw.line(surface, (255, 0, 0), (radius+1, radius+1), (radius*2+1, radius+1), 1)
-        pygame.draw.line(surface, (0, 255, 0), (radius+1, radius+1), (radius+1, 0), 1)
-        pygame.draw.ellipse(surface, (0, 0, 255), pygame.Rect(radius, radius, 3, 3))
+        pygame.draw.line(surface, (255, 0, 0), (radius, radius), (radius*2+1, radius), 1)
+        pygame.draw.line(surface, (0, 255, 0), (radius, radius), (radius, 0), 1)
+        pygame.draw.ellipse(surface, (0, 0, 255), pygame.Rect(radius-1, radius-1, 3, 3))
 
         super().__init__(surface)
 
