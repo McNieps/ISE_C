@@ -1,0 +1,18 @@
+{
+  "surface": {
+    "caching_enabled": true,
+    "caching_size": 360
+  },
+
+  "sound": {
+    "frequency": 44100,
+    "size": -16,
+    "channels": 2,
+    "buffer": 512,
+    "devicename": null,
+
+    "max_simultaneous_sounds": 64,
+
+    "default_volume": 0.2
+  }
+}
