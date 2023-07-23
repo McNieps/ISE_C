@@ -23,14 +23,14 @@ class App:
 
     @classmethod
     def _init_pygame(cls) -> None:
-        pygame.mixer.pre_init(frequency=Resource.data["engine"]["mixer"]["frequency"],
-                              size=Resource.data["engine"]["mixer"]["size"],
-                              channels=Resource.data["engine"]["mixer"]["channels"],
-                              buffer=Resource.data["engine"]["mixer"]["buffer"],
-                              devicename=Resource.data["engine"]["mixer"]["devicename"])
+        pygame.mixer.pre_init(frequency=Resource.data["engine"]["resource"]["sound"]["frequency"],
+                              size=Resource.data["engine"]["resource"]["sound"]["size"],
+                              channels=Resource.data["engine"]["resource"]["sound"]["channels"],
+                              buffer=Resource.data["engine"]["resource"]["sound"]["buffer"],
+                              devicename=Resource.data["engine"]["resource"]["sound"]["devicename"])
         pygame.init()
         pygame.mixer.init()
-        pygame.mixer.set_num_channels(Resource.data["engine"]["mixer"]["max_simultaneous_sounds"])
+        pygame.mixer.set_num_channels(Resource.data["engine"]["resource"]["sound"]["max_simultaneous_sounds"])
 
     @classmethod
     def _create_window(cls) -> None:

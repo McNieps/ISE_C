@@ -116,6 +116,22 @@ class Resource:
                     raise InvalidFileFormatError(f"{elem.name.split('.')[-1]} is not a supported image file format")
 
     @classmethod
+    def cache_image(cls,
+                    image_key_paths: list[str]) -> None:
+
+        image_dict = None
+        image_path = cls.image
+        for key in image_key_paths:
+            image_dict = image_path
+            image_path = image_path[key]
+
+        if not isinstance(image_path, pygame.Surface):
+            raise TypeError(f"Image path {image_key_paths} does not lead to a pygame.Surface object")
+
+        image_dict[image_key_paths[-1]] = (image_path.get_size())
+
+
+    @classmethod
     def _load_sound(cls,
                     assets_path: PathLike,
                     current_dict: dict = None) -> None:
