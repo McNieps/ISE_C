@@ -1,6 +1,10 @@
 import pygame
+import typing
 
 from collections.abc import Iterable
+
+from ise.objects.cached_surface import CachedSurface
+from ise.environment.sprite.rendering_techniques import RenderingTechniques
 
 
 class SimpleSprite:
@@ -8,6 +12,7 @@ class SimpleSprite:
 
     def __init__(self,
                  surface: pygame.Surface) -> None:
+        """Initialize sprite."""
 
         self.surface = surface
         self.rect = self.surface.get_rect()
@@ -15,64 +20,42 @@ class SimpleSprite:
 
         self.effective_surface = self.surface.copy()
         self.effective_rect = self.rect.copy()
-        self.rendering_technique = self.render_rotate
+
+        self.rendering_technique = RenderingTechniques.static
 
     def update(self,
                delta: float) -> None:
+        """Update sprite."""
+
         pass
 
-    def toggle_angle(self,
-                     enable: bool = None):
+    def set_rendering_technique(self,
+                                rendering_technique: typing.Literal["static", "rotated", "cached"]) -> None:
+        """Set rendering technique."""
 
-        if enable is None:
-            if self.rendering_technique is self.render_static:
-                self.rendering_technique = self.render_rotate
-            else:
-                self.rendering_technique = self.render_static
-            return
+        if rendering_technique == "static":
+            self.rendering_technique = RenderingTechniques.static
 
-        if enable:
-            self.rendering_technique = self.render_rotate
+        elif rendering_technique == "rotated":
+            self.rendering_technique = RenderingTechniques.rotated
+
+        elif rendering_technique == "cached":
+            if not isinstance(self.surface, CachedSurface):
+                raise ValueError("Cached rendering technique requires cached surface.")
+            self.rendering_technique = RenderingTechniques.cached
+
         else:
-            self.rendering_technique = self.render_static
-
+            raise ValueError("Invalid rendering technique.")
 
     def render(self,
                destination: pygame.Surface,
                destination_rect: pygame.Rect,
                offset: Iterable,
                angle: float) -> None:
+        """Render sprite."""
 
-        self.rendering_technique(destination,
+        self.rendering_technique(self,
+                                 destination,
                                  destination_rect,
                                  offset,
                                  angle)
-
-    def render_static(self,
-                      destination: pygame.Surface,
-                      destination_rect: pygame.Rect,
-                      offset: Iterable,
-                      _angle: float) -> None:
-
-        self.effective_rect = self.rect.move(*offset)
-
-        if not self.effective_rect.colliderect(destination_rect):
-            return
-
-        destination.blit(self.surface, self.effective_rect)
-
-    def render_rotate(self,
-                      destination: pygame.Surface,
-                      destination_rect: pygame.Rect,
-                      offset: Iterable,
-                      angle: float) -> None:
-
-        self.effective_surface = pygame.transform.rotate(self.surface, angle)
-        self.effective_rect = self.effective_surface.get_rect()
-        self.effective_rect.center = self.rect.center
-
-        if not self.effective_rect.colliderect(destination_rect):
-            return
-
-        self.effective_rect.move_ip(*offset)
-        destination.blit(self.effective_surface, self.effective_rect)
