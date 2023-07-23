@@ -42,3 +42,18 @@ class TestInstance(BaseInstance):
         self.scene.render()
 
         pygame.display.flip()
+
+
+if __name__ == '__main__':
+    import asyncio
+
+    from ise.app.app import App
+
+
+    async def main():
+        App.init("../assets/")
+        x = TestInstance()
+        await x.execute()
+
+
+    asyncio.run(main())
