@@ -15,9 +15,14 @@ class DebugSprite(AnimatedSprite):
         pygame.draw.ellipse(surface_1, (0, 0, 255), pygame.Rect(radius - 1, radius - 1, 3, 3))
 
         surface_2 = surface_1.copy()
-        surface_2 = pygame.transform.rotate(surface_2, 90)
+        pygame.draw.ellipse(surface_2, (0, 0, 0), pygame.Rect(radius * 3/2 - 2, radius * 1/2 - 2, 5, 5))
+        pygame.draw.ellipse(surface_2, (255, 255, 255), pygame.Rect(radius * 3/2 - 1, radius * 1/2 - 1, 3, 3))
 
-        super().__init__(surfaces=[surface_1, surface_2], frame_durations=[1.0, 1.0], loop=True)
+        surface_3 = surface_1.copy()
+        pygame.draw.ellipse(surface_3, (255, 255, 255), pygame.Rect(radius * 3/2 - 2, radius * 1/2 - 2, 5, 5))
+        pygame.draw.ellipse(surface_3, (0, 0, 0), pygame.Rect(radius * 3/2 - 1, radius * 1/2 - 1, 3, 3))
+
+        super().__init__(surfaces=[surface_1, surface_2, surface_3], frame_durations=[1.0, 1.0, 1.0], loop=True)
 
 
 if __name__ == '__main__':
