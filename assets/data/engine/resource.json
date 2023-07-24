@@ -1,7 +1,9 @@
 {
   "surface": {
-    "caching_enabled": true,
-    "caching_size": 360
+    "caching": {
+      "enabled": true,
+      "default_size": 45
+    }
   },
 
   "sound": {

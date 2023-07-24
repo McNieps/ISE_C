@@ -1,8 +1,8 @@
 {
   "stock": {
-    "tree": {
+    "arrow": {
       "cached": true,
-      "step": 0
+      "cache_size": 90
     }
   }
 }

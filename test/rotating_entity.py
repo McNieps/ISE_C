@@ -5,7 +5,7 @@ from ise.environment.position import AdvancedPos
 
 class RotatingEntity(Entity):
     def __init__(self) -> None:
-        position = AdvancedPos(position=(200, 200), speed=(1, 0), va=10)
+        position = AdvancedPos(position=(200, 200), speed=(0, 0), va=45)
 
         super().__init__(position, DebugSprite())
         self.sprite.set_rendering_technique("rotated")

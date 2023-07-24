@@ -6,6 +6,7 @@ from ise.environment.scene import Scene
 from moving_entity import MovingEntity
 from origin_entity import OriginEntity
 from rotating_entity import RotatingEntity
+from cached_surf_entity import CachedSurfEntity
 
 
 class TestInstance(BaseInstance):
@@ -15,7 +16,7 @@ class TestInstance(BaseInstance):
         self.window = pygame.display.get_surface()
 
         self.scene = Scene(self.window)
-        self.scene.add_entities(MovingEntity(), OriginEntity(), RotatingEntity())
+        self.scene.add_entities(MovingEntity(), OriginEntity(), CachedSurfEntity(), RotatingEntity())
 
     async def loop(self):
         for event in pygame.event.get():

@@ -4,6 +4,7 @@ import os
 
 from ise.ise_typing import PathLike
 from ise.ise_error import InvalidFileFormatError
+from ise.objects import CachedSurface
 
 
 class Resource:
@@ -45,6 +46,8 @@ class Resource:
         if not default_only:
             cls._load_image(cls._project_assets_directory)
             cls._load_sound(cls._project_assets_directory)
+
+        cls._cache()
 
     @classmethod
     def _get_default_assets_directory(cls):
@@ -93,43 +96,60 @@ class Resource:
     @classmethod
     def _load_image(cls,
                     assets_path: PathLike,
-                    current_dict: dict = None) -> None:
+                    current_image_dict: dict = None) -> None:
 
-        if current_dict is None:
-            current_dict = cls.image
+        if current_image_dict is None:
+            current_image_dict = cls.image
             assets_path += "image/"
 
         for elem in os.scandir(assets_path):
             if elem.is_dir():
-                if elem.name not in current_dict:
-                    current_dict[elem.name] = {}
+                if elem.name not in current_image_dict:
+                    current_image_dict[elem.name] = {}
 
-                cls._load_image(assets_path + elem.name + "/", current_dict[elem.name])
+                cls._load_image(assets_path + elem.name + "/",
+                                current_image_dict[elem.name])
 
             if elem.is_file():
                 key_name = "".join(elem.name.split(".")[:-1])
 
                 if any(elem.name.endswith(ext) for ext in [".png", ".jpg"]):
-                    current_dict[key_name] = pygame.image.load(assets_path + elem.name).convert_alpha()
+                    current_image_dict[key_name] = pygame.image.load(assets_path + elem.name).convert_alpha()
 
                 else:
                     raise InvalidFileFormatError(f"{elem.name.split('.')[-1]} is not a supported image file format")
 
     @classmethod
-    def cache_image(cls,
-                    image_key_paths: list[str]) -> None:
+    def _cache(cls,
+               surf_dict: dict = None,
+               data_dict: dict = None) -> None:
 
-        image_dict = None
-        image_path = cls.image
-        for key in image_key_paths:
-            image_dict = image_path
-            image_path = image_path[key]
+        if not cls.data["engine"]["resource"]["surface"]["caching"]["enabled"]:
+            return
 
-        if not isinstance(image_path, pygame.Surface):
-            raise TypeError(f"Image path {image_key_paths} does not lead to a pygame.Surface object")
+        if surf_dict is None:
+            surf_dict = cls.image
+            data_dict = cls.data["image"]
 
-        image_dict[image_key_paths[-1]] = (image_path.get_size())
+        for image_key in data_dict:
+            if image_key in surf_dict:
+                if isinstance(surf_dict[image_key], dict):
+                    cls._cache(surf_dict[image_key], data_dict[image_key])
 
+                if "cached" in data_dict[image_key]:
+                    surf_dict[image_key] = cls._cache_image(surf_dict[image_key], data_dict[image_key])
+
+    @classmethod
+    def _cache_image(cls,
+                     surf: pygame.Surface,
+                     surf_dict_param: dict[str, ...]) -> CachedSurface:
+
+        if "cache_size" in surf_dict_param:
+            cache_size = surf_dict_param["cache_size"]
+        else:
+            cache_size = cls.data["engine"]["resource"]["surface"]["caching"]["default_size"]
+
+        return CachedSurface(surf, cache_size)
 
     @classmethod
     def _load_sound(cls,
