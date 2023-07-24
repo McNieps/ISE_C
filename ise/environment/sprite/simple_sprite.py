@@ -8,7 +8,7 @@ from ise.environment.sprite.rendering_techniques import RenderingTechniques
 
 
 class SimpleSprite:
-    __slots__ = ["surface", "rect", "effective_rect", "effective_surface", "rendering_technique"]
+    __slots__ = ["surface", "rect", "effective_rect", "effective_surface", "_rendering_technique"]
 
     def __init__(self,
                  surface: pygame.Surface) -> None:
@@ -21,7 +21,7 @@ class SimpleSprite:
         self.effective_surface = self.surface.copy()
         self.effective_rect = self.rect.copy()
 
-        self.rendering_technique = RenderingTechniques.static
+        self._rendering_technique = RenderingTechniques.static
 
     def update(self,
                delta: float) -> None:
@@ -34,15 +34,15 @@ class SimpleSprite:
         """Set rendering technique."""
 
         if rendering_technique == "static":
-            self.rendering_technique = RenderingTechniques.static
+            self._rendering_technique = RenderingTechniques.static
 
         elif rendering_technique == "rotated":
-            self.rendering_technique = RenderingTechniques.rotated
+            self._rendering_technique = RenderingTechniques.rotated
 
         elif rendering_technique == "cached":
             if not isinstance(self.surface, CachedSurface):
                 raise ValueError("Cached rendering technique requires cached surface.")
-            self.rendering_technique = RenderingTechniques.cached
+            self._rendering_technique = RenderingTechniques.cached
 
         else:
             raise ValueError("Invalid rendering technique.")
@@ -54,8 +54,8 @@ class SimpleSprite:
                angle: float) -> None:
         """Render sprite."""
 
-        self.rendering_technique(self,
-                                 destination,
-                                 destination_rect,
-                                 offset,
-                                 angle)
+        self._rendering_technique(self,
+                                  destination,
+                                  destination_rect,
+                                  offset,
+                                  angle)

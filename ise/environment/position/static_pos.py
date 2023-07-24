@@ -17,10 +17,7 @@ class StaticPos(Pos):
                  position: Iterable = None,
                  **kwargs):
 
-        if position is not None:
-            position = pygame.math.Vector2(*position)
-        else:
-            position = pygame.math.Vector2(0, 0)
+        position = pygame.math.Vector2(*position) if position is not None else pygame.math.Vector2(0, 0)
 
         super().__init__(position=position)
 

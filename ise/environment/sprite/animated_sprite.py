@@ -9,6 +9,18 @@ class AnimatedSprite(SimpleSprite):
                  frame_durations: list[float],
                  loop: bool = True) -> None:
 
+        if len(surfaces) == 0:
+            raise ValueError("Length of surfaces must be greater than 0.")
+
+        if len(surfaces) != len(frame_durations):
+            raise ValueError("Length of surfaces and frame_durations must be equal.")
+
+        if not all(isinstance(duration, (int, float)) for duration in frame_durations):
+            raise ValueError("All frame_durations must be int or float.")
+
+        if not all(duration > 0 for duration in frame_durations):
+            raise ValueError("All frame_durations must be greater than 0.")
+
         super().__init__(surfaces[0])
 
         self.surfaces: list[pygame.Surface] = surfaces
