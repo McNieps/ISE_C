@@ -15,7 +15,7 @@ class AnimatedSprite(SimpleSprite):
         if len(surfaces) != len(frame_durations):
             raise ValueError("Length of surfaces and frame_durations must be equal.")
 
-        if not all(isinstance(duration, (int, float)) for duration in frame_durations):
+        if not all(isinstance(duration, (int | float)) for duration in frame_durations):
             raise ValueError("All frame_durations must be int or float.")
 
         if not all(duration > 0 for duration in frame_durations):

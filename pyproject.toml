@@ -7,7 +7,7 @@ name = "ISE_C"
 # Decrease the maximum line length to 79 characters.
 line-length = 120
 src = ["ise_c"]
-ignore = ["S311"]
+ignore = ["S311", "C901"]
 select = [
   "E",   # pycodestyle
   "F",   # pyflakes

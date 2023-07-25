@@ -2,7 +2,7 @@
   "surface": {
     "caching": {
       "enabled": true,
-      "default_size": 45
+      "default_size": 90
     }
   },
 
