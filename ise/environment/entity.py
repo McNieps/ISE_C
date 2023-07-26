@@ -23,10 +23,8 @@ class Entity:
 
     def render(self,
                camera_offset: Iterable,
-               camera_angle: float,
                surface: pygame.Surface,
                rect: pygame.Rect) -> None:
         """Render elements of this container."""
 
-        effective_angle = camera_angle + self.position.a
-        self.sprite.render(surface, rect, camera_offset, effective_angle)
+        self.sprite.render(surface, rect, camera_offset, self.position.a)
