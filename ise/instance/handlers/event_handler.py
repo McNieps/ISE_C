@@ -4,6 +4,9 @@ import typing
 
 class EventHandler:
     def __init__(self) -> None:
+        self.events = []
+        self.mouse_rel = (0, 0)
+
         self._keypressed_callbacks: dict[int, list[typing.Callable]] = {}
         self._keydown_callbacks: dict[int, list[typing.Callable]] = {}
         self._keyup_callbacks: dict[int, list[typing.Callable]] = {}
@@ -11,6 +14,8 @@ class EventHandler:
         self._buttonpressed_callbacks: dict[int, list[typing.Callable]] = {}
         self._buttondown_callbacks: dict[int, list[typing.Callable]] = {}
         self._buttonup_callbacks: dict[int, list[typing.Callable]] = {}
+
+        self._mouse_move_callbacks: list[typing.Callable[[tuple[int, int]], None]] = []
 
         self._quit_callbacks: list[typing.Callable] = []
 
@@ -56,54 +61,21 @@ class EventHandler:
             self._buttonup_callbacks[button] = []
         self._buttonup_callbacks[button].append(callback)
 
+    def register_mouse_move_callback(self,
+                                     callback: typing.Callable[[tuple[int, int]], None]) -> None:
+        """Registers a callback to be called when the cursor is dragging."""
+        self._mouse_move_callbacks.append(callback)
+
     def register_quit_callback(self,
                                callback: typing.Callable) -> None:
         """Registers a callback to be called when the game is quit."""
         self._quit_callbacks.append(callback)
 
-    def _keypressed(self,
-                    key: int) -> None:
-        """Calls all callbacks registered to the key pressed."""
-        for callback in self._keypressed_callbacks[key]:
-            callback()
-
-    def _keydown(self,
-                 key: int) -> None:
-        """Calls all callbacks registered to the key down."""
-        for callback in self._keydown_callbacks[key]:
-            callback()
-
-    def _keyup(self,
-               key: int) -> None:
-        """Calls all callbacks registered to the key leave."""
-        for callback in self._keyup_callbacks[key]:
-            callback()
-
-    def _buttonpressed(self,
-                       button: int) -> None:
-        """Calls all callbacks registered to the button pressed."""
-        for callback in self._buttonpressed_callbacks[button]:
-            callback()
-
-    def _buttondown(self,
-                    button: int) -> None:
-        """Calls all callbacks registered to the button down."""
-        for callback in self._buttondown_callbacks[button]:
-            callback()
-
-    def _buttonup(self,
-                  button: int) -> None:
-        """Calls all callbacks registered to the button up."""
-        for callback in self._buttonup_callbacks[button]:
-            callback()
-
-    def _quit(self) -> None:
-        """Calls all callbacks registered to the quit event."""
-        for callback in self._quit_callbacks:
-            callback()
-
     def handle_events(self) -> None:
-        for event in pygame.event.get():
+        """Handles all events."""
+        self.events = pygame.event.get()
+
+        for event in self.events:
             if event.type == pygame.QUIT:
                 self._quit()
                 continue
@@ -134,3 +106,72 @@ class EventHandler:
         for button in self._buttonpressed_callbacks:
             if button_pressed[button]:
                 self._buttonpressed(button)
+
+        mouse_rel = pygame.mouse.get_rel()
+        if any(mouse_rel):
+            self._mouse_move(mouse_rel)
+
+    def _keypressed(self,
+                    key: int) -> None:
+        """Calls all callbacks registered to the key pressed."""
+        if key not in self._keypressed_callbacks:
+            return
+
+        for callback in self._keypressed_callbacks[key]:
+            callback()
+
+    def _keydown(self,
+                 key: int) -> None:
+        """Calls all callbacks registered to the key down."""
+        if key not in self._keydown_callbacks:
+            return
+
+        for callback in self._keydown_callbacks[key]:
+            callback()
+
+    def _keyup(self,
+               key: int) -> None:
+        """Calls all callbacks registered to the key leave."""
+        if key not in self._keyup_callbacks:
+            return
+
+        for callback in self._keyup_callbacks[key]:
+            callback()
+
+    def _buttonpressed(self,
+                       button: int) -> None:
+        """Calls all callbacks registered to the button pressed."""
+        if button not in self._buttonpressed_callbacks:
+            return
+
+        for callback in self._buttonpressed_callbacks[button]:
+            callback()
+
+    def _buttondown(self,
+                    button: int) -> None:
+        """Calls all callbacks registered to the button down."""
+        if button not in self._buttondown_callbacks:
+            return
+
+        for callback in self._buttondown_callbacks[button]:
+            callback()
+
+    def _buttonup(self,
+                  button: int) -> None:
+        """Calls all callbacks registered to the button up."""
+        if button not in self._buttonup_callbacks:
+            return
+
+        for callback in self._buttonup_callbacks[button]:
+            callback()
+
+    def _mouse_move(self,
+                    rel: tuple[int, int]) -> None:
+        """Calls all callbacks registered to the mouse move."""
+        for callback in self._mouse_move_callbacks:
+            callback(rel)
+
+    def _quit(self) -> None:
+        """Calls all callbacks registered to the quit event."""
+        for callback in self._quit_callbacks:
+            callback()
