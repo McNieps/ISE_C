@@ -45,6 +45,14 @@ class EventHandler:
             self._keyup_callbacks[key] = []
         self._keyup_callbacks[key].append(callback)
 
+    def register_buttonpressed_callback(self,
+                                        button: int,
+                                        callback: typing.Callable) -> None:
+        """Registers a callback to be called when the button is pressed."""
+        if button not in self._buttonpressed_callbacks:
+            self._buttonpressed_callbacks[button] = []
+        self._buttonpressed_callbacks[button].append(callback)
+
     def register_buttondown_callback(self,
                                      button: int,
                                      callback: typing.Callable) -> None:
@@ -74,6 +82,7 @@ class EventHandler:
     def handle_events(self) -> None:
         """Handles all events."""
         self.events = pygame.event.get()
+        self.mouse_rel = pygame.mouse.get_rel()
 
         for event in self.events:
             if event.type == pygame.QUIT:
@@ -96,6 +105,9 @@ class EventHandler:
                 self._buttonup(event.button)
                 continue
 
+            if event.type == pygame.MOUSEMOTION:
+                self._mouse_move()
+
         key_pressed = pygame.key.get_pressed()
         button_pressed = pygame.mouse.get_pressed(5)
 
@@ -106,10 +118,6 @@ class EventHandler:
         for button in self._buttonpressed_callbacks:
             if button_pressed[button]:
                 self._buttonpressed(button)
-
-        mouse_rel = pygame.mouse.get_rel()
-        if any(mouse_rel):
-            self._mouse_move(mouse_rel)
 
     def _keypressed(self,
                     key: int) -> None:
@@ -165,11 +173,10 @@ class EventHandler:
         for callback in self._buttonup_callbacks[button]:
             callback()
 
-    def _mouse_move(self,
-                    rel: tuple[int, int]) -> None:
+    def _mouse_move(self) -> None:
         """Calls all callbacks registered to the mouse move."""
         for callback in self._mouse_move_callbacks:
-            callback(rel)
+            callback(self.mouse_rel)
 
     def _quit(self) -> None:
         """Calls all callbacks registered to the quit event."""
