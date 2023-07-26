@@ -1,7 +1,7 @@
 import pygame
 
 from ise.instance.splash_screen import Splash
-from ise.instance import LoopHandler, EventHandler, BaseInstance
+from ise.instance import LoopHandler, BaseInstance
 from ise.environment.scene import Scene
 
 from moving_entity import MovingEntity
