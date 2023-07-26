@@ -1,12 +1,12 @@
 import asyncio
 
-from ise.instance.handlers import LoopHandler
-from ise.instance.handlers import EventHandler
+from ise.instance.handlers import LoopHandler, EventHandler
 
 
 class BaseInstance:
     def __init__(self):
         self.event_handler = EventHandler()
+        self.event_handler.register_quit_callback(LoopHandler.stop_game)
         self.fps = 60
 
     async def setup(self):

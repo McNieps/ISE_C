@@ -1,8 +1,9 @@
 import pygame
 
 from ise.instance.splash_screen import Splash
-from ise.instance import LoopHandler, BaseInstance
+from ise.instance import LoopHandler, EventHandler, BaseInstance
 from ise.environment.scene import Scene
+
 from moving_entity import MovingEntity
 from origin_entity import OriginEntity
 from rotating_entity import RotatingEntity
@@ -12,35 +13,30 @@ from cached_surf_entity import CachedSurfEntity
 class TestInstance(BaseInstance):
     def __init__(self):
         super().__init__()
-        self.fps = 60
+        self.fps = 120
         self.window = pygame.display.get_surface()
 
         self.scene = Scene(self.window)
-        self.scene.add_entities(MovingEntity(), OriginEntity(), CachedSurfEntity(), RotatingEntity())
+        origin_entity = RotatingEntity()
+        self.scene.add_entities(origin_entity)
+
+        self.gui = Scene(self.window)
+        self.gui.add_entities(origin_entity)
+
+        def move_camera() -> None:
+            self.scene.camera.position.position -= pygame.math.Vector2(self.event_handler.mouse_rel)/3
+
+        self.event_handler.register_buttonpressed_callback(0, move_camera)
 
     async def loop(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                LoopHandler.stop_instance(self)
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    LoopHandler.stop_instance(self)
-                if event.key == pygame.K_RETURN:
-                    await Splash().execute()
+        self.event_handler.handle_events()
 
-        if pygame.mouse.get_pressed(3)[0]:
-            self.scene.camera.position.position -= pygame.math.Vector2(*pygame.mouse.get_rel())/3
-            print(f"Camera "
-                  f"X: {round(self.scene.camera.position.position[0])}  "
-                  f"Y: {round(self.scene.camera.position.position[1])}")
-        else:
-            pygame.mouse.get_rel()
-
-        for entity in self.scene.entities:
-            entity.update(LoopHandler.delta)
+        self.scene.update(LoopHandler.delta)
+        self.gui.update(LoopHandler.delta)
 
         self.window.fill((127, 127, 127))
         self.scene.render()
+        self.gui.render()
 
         pygame.display.flip()
 

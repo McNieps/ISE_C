@@ -7,7 +7,8 @@ from ise.environment.position import SimplePos
 
 class MovingEntity(Entity):
     def __init__(self) -> None:
-        super().__init__(SimplePos((random.randint(-100, 100), random.randint(-100, 100)),
+        super().__init__(SimplePos((random.randint(-100, 100),
+                                    random.randint(-100, 100)),
                                    (-100, 0)), DebugSprite())
 
     def update(self,

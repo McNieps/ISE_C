@@ -16,7 +16,7 @@ class CachedSurfEntity(Entity):
                                a=random.randint(0, 360))
 
         sprite = SimpleSprite(Resource.image["stock"]["illapsum_splash"])
-        sprite.set_rendering_technique("rotated")
+        sprite.set_rendering_technique("cached")
 
         super().__init__(position, sprite)
 
