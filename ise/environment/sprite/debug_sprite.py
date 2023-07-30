@@ -22,7 +22,7 @@ class DebugSprite(AnimatedSprite):
         pygame.draw.ellipse(surface_3, (255, 255, 255), pygame.Rect(radius - 2, radius - 2, 5, 5))
         pygame.draw.ellipse(surface_3, (0, 0, 255), pygame.Rect(radius - 1, radius - 1, 3, 3))
 
-        super().__init__(surfaces=[surface_1, surface_2, surface_3], frame_durations=[1.0, 0.1, 0.1], loop=True)
+        super().__init__(surfaces=[surface_1, surface_2, surface_3], frame_durations=[0.8, 0.1, 0.1], loop=True)
 
 
 if __name__ == '__main__':

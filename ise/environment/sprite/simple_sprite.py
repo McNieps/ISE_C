@@ -8,7 +8,7 @@ from ise.environment.sprite.rendering_techniques import RenderingTechniques
 
 
 class SimpleSprite:
-    __slots__ = ["surface", "rect", "effective_rect", "effective_surface", "_rendering_technique"]
+    __slots__ = ["surface", "rect", "effective_rect", "effective_surf", "_rendering_technique"]
 
     def __init__(self,
                  surface: pygame.Surface) -> None:
@@ -18,7 +18,7 @@ class SimpleSprite:
         self.rect = self.surface.get_rect()
         self.rect.center = 0, 0
 
-        self.effective_surface = self.surface.copy()
+        self.effective_surf = self.surface.copy()
         self.effective_rect = self.rect.copy()
 
         self._rendering_technique = RenderingTechniques.static

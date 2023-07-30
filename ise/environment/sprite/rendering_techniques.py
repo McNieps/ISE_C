@@ -26,14 +26,14 @@ class RenderingTechniques:
                 offset: Iterable,
                 angle: float) -> None:
 
-        self.effective_surface = pygame.transform.rotate(self.surface, angle)
-        self.effective_rect = self.effective_surface.get_rect()
+        self.effective_surf = pygame.transform.rotate(self.surface, angle)
+        self.effective_rect = self.effective_surf.get_rect()
         self.effective_rect.center = self.rect.move(*offset).center
 
         if not self.effective_rect.colliderect(destination_rect):
             return
 
-        destination.blit(self.effective_surface, self.effective_rect)
+        destination.blit(self.effective_surf, self.effective_rect)
 
     @staticmethod
     def cached(self,
@@ -42,11 +42,11 @@ class RenderingTechniques:
                offset: Iterable,
                angle: float) -> None:
 
-        self.effective_surface = self.surface[angle]
-        self.effective_rect = self.effective_surface.get_rect()
+        self.effective_surf = self.surface[angle]
+        self.effective_rect = self.effective_surf.get_rect()
         self.effective_rect.center = self.rect.move(*offset).center
 
         if not self.effective_rect.colliderect(destination_rect):
             return
 
-        destination.blit(self.effective_surface, self.effective_rect)
+        destination.blit(self.effective_surf, self.effective_rect)
