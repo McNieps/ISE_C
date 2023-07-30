@@ -11,7 +11,8 @@ class SimpleSprite:
     __slots__ = ["surface", "rect", "effective_rect", "effective_surf", "_rendering_technique"]
 
     def __init__(self,
-                 surface: pygame.Surface) -> None:
+                 surface: pygame.Surface,
+                 rendering_technique: typing.Literal["static", "rotated", "cached"]) -> None:
         """Initialize sprite."""
 
         self.surface = surface
@@ -21,7 +22,8 @@ class SimpleSprite:
         self.effective_surf = self.surface.copy()
         self.effective_rect = self.rect.copy()
 
-        self._rendering_technique = RenderingTechniques.static
+        self._rendering_technique = None
+        self.set_rendering_technique(rendering_technique)
 
     def update(self,
                delta: float) -> None:

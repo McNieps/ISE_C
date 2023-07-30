@@ -16,4 +16,5 @@ class Camera:
 
     def get_offset(self,
                    position: StaticPos) -> pygame.math.Vector2:
+
         return position.position - self.position.position

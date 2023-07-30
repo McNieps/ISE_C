@@ -24,15 +24,8 @@ class PymunkPos(AdvancedPos):
                  base_shape_elasticity: float = None,
                  position: Iterable = None,
                  speed: Iterable = None,
-                 accel: Iterable = None,
                  a: float = 0,
-                 va: float = 0,
-                 aa: float = 0,
-                 damping: float = 1,
-                 a_damping: float = 1) -> None:
-
-        self.body: pymunk.Body = pymunk.Body(0, 0, body_type=body_type)
-        self.shapes: list[pymunk.Shape] = []
+                 va: float = 0) -> None:
 
         if base_shape_density is None:
             base_shape_density = self.BASE_DENSITY
@@ -43,28 +36,26 @@ class PymunkPos(AdvancedPos):
         if base_shape_elasticity is None:
             base_shape_elasticity = self.BASE_ELASTICITY
 
-        self.base_shape_density = base_shape_density
-        self.base_shape_friction = base_shape_friction
-        self.base_shape_elasticity = base_shape_elasticity
+        self.body: pymunk.Body = pymunk.Body(0, 0, body_type=body_type)
+        self.shapes: list[pymunk.Shape] = []
+        self.base_shape_density: float = base_shape_density
+        self.base_shape_friction: float = base_shape_friction
+        self.base_shape_elasticity: float = base_shape_elasticity
 
         super().__init__(position=position,
                          speed=speed,
-                         accel=accel,
                          a=a,
-                         va=va,
-                         aa=aa,
-                         damping=damping,
-                         a_damping=a_damping)
+                         va=va)
 
     def update(self,
                delta: float) -> None:
         pass
 
-    def set_shape_characteristics(self,
-                                  shape: pymunk.Shape,
-                                  density: float = None,
-                                  friction: float = None,
-                                  elasticity: float = None) -> None:
+    def _set_shape_characteristics(self,
+                                   shape: pymunk.Shape,
+                                   density: float = None,
+                                   friction: float = None,
+                                   elasticity: float = None) -> None:
 
         if density is not None:
             shape.density = density
@@ -84,30 +75,18 @@ class PymunkPos(AdvancedPos):
         elif shape.elasticity == 0:
             shape.elasticity = self.base_shape_elasticity
 
-    def add_shape(self,
-                  shape: pymunk.Shape,
-                  density: float = None,
-                  friction: float = None,
-                  elasticity: float = None) -> None:
-
-        self.set_shape_characteristics(shape, density, friction, elasticity)
-        self.shapes.append(shape)
-
-    def remove_shape(self,
-                     shape: pymunk.Shape) -> None:
-
-        self.shapes.remove(shape)
-
     def create_rect_shape(self,
                           surface: pygame.Surface,
-                          _offset: Sequence[float, float] = (0, 0),
                           radius: float = -1,
                           density: float = None,
                           friction: float = None,
-                          elasticity: float = None) -> None:
+                          elasticity: float = None) -> pymunk.Shape:
 
         shape = pymunk.Poly.create_box(self.body, surface.get_size(), radius=radius)
-        self.add_shape(shape, density, friction, elasticity)
+        self._set_shape_characteristics(shape, density, friction, elasticity)
+        self.shapes.append(shape)
+
+        return shape
 
     def create_surface_shape(self,
                              surface: pygame.Surface,
@@ -115,7 +94,7 @@ class PymunkPos(AdvancedPos):
                              radius: float = -1,
                              density: float = None,
                              friction: float = None,
-                             elasticity: float = None) -> None:
+                             elasticity: float = None) -> list[pymunk.Shape]:
 
         size = surface.get_size()
         surface_bounding_box = pymunk.BB(0, 0, size[0]-1, size[1]-1)
@@ -143,11 +122,14 @@ class PymunkPos(AdvancedPos):
             shapes.append(pymunk.Poly(self.body, polygon, transform=t, radius=radius))
 
         for shape in shapes:
-            self.add_shape(shape, density, friction, elasticity)
+            self._set_shape_characteristics(shape, density, friction, elasticity)
+
+        self.shapes.extend(shapes)
+        return shapes
 
     @property
     def position(self) -> tuple[float, float]:
-        return self.body.position
+        return int(self.body.position.x), int(self.body.position.y)
 
     @position.setter
     def position(self, position: tuple[float, float]) -> None:

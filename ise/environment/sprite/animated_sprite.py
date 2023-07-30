@@ -1,4 +1,5 @@
 import pygame
+import typing
 
 from ise.environment.sprite.simple_sprite import SimpleSprite
 
@@ -6,6 +7,7 @@ from ise.environment.sprite.simple_sprite import SimpleSprite
 class AnimatedSprite(SimpleSprite):
     def __init__(self,
                  surfaces: list[pygame.Surface],
+                 rendering_technique: typing.Literal["static", "rotated", "cached"],
                  frame_durations: list[float],
                  loop: bool = True) -> None:
 
@@ -21,7 +23,7 @@ class AnimatedSprite(SimpleSprite):
         if not all(duration > 0 for duration in frame_durations):
             raise ValueError("All frame_durations must be greater than 0.")
 
-        super().__init__(surfaces[0])
+        super().__init__(surfaces[0], rendering_technique)
 
         self.surfaces: list[pygame.Surface] = surfaces
         self.frame_durations: list[float] = frame_durations

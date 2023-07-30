@@ -15,15 +15,11 @@ class FloorEntity(Entity):
         surface = pygame.Surface(rect.size)
         surface.fill((255, 50, 100))
         pygame.draw.rect(surface, (0, 0, 0), (0, 0, *rect.size), 5)  # Draw the outline of the rectangle
-        sprite = SimpleSprite(surface)
+        sprite = SimpleSprite(surface, rendering_technique="static")
         position.create_rect_shape(surface)
 
         self.body = position.body
         self.shapes = position.shapes
-
-        for shape in self.shapes:
-            print(shape.friction)
-            print(shape.elasticity)
 
         sprite.set_rendering_technique("static")
 

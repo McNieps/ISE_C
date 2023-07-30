@@ -8,7 +8,6 @@ class RotatingEntity(Entity):
         position = AdvancedPos(position=(200, 200), speed=(0, 0), va=45)
 
         super().__init__(position, DebugSprite())
-        self.sprite.set_rendering_technique("rotated")
 
     def update(self,
                delta: float) -> None:

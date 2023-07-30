@@ -137,7 +137,6 @@ class Resource:
                     cls._cache(surf_dict[image_key], data_dict[image_key])
 
                 if "cached" in data_dict[image_key] and data_dict[image_key]["cached"] is True:
-                    print(image_key)
                     surf_dict[image_key] = cls._cache_image(surf_dict[image_key], data_dict[image_key])
 
     @classmethod

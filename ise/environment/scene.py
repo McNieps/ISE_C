@@ -31,9 +31,7 @@ class Scene:
             if isinstance(entity.position, PymunkPos):
                 if entity.position.body not in self.space.bodies:
                     self.space.add(entity.position.body)
-                for shape in entity.position.shapes:
-                    if shape not in self.space.shapes:
-                        self.space.add(shape)
+                self.space.add(*[shape for shape in entity.position.shapes if shape not in self.space.shapes])
 
     def update(self,
                delta: float) -> None:

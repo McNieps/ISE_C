@@ -9,11 +9,9 @@ class PhysicEntity(Entity):
                  position: tuple = (200, 200)) -> None:
 
         position = PymunkPos(position=position, va=1800)
-        position.create_surface_shape(Resource.image["stock"]["face"])
+        position.create_surface_shape(Resource.image["stock"]["face"], radius=-2)
 
-        print(position.shapes)
-
-        sprite = SimpleSprite(Resource.image["stock"]["face"])
+        sprite = SimpleSprite(Resource.image["stock"]["face"], rendering_technique="rotated")
 
         sprite.set_rendering_technique("rotated")
 
