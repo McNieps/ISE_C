@@ -1,6 +1,7 @@
 from ise.environment import Entity
 from ise.environment.position import PymunkPos
-from ise.environment.sprite import SimpleSprite
+from ise.environment.sprite import AnimatedSprite
+from ise.environment.sprite.pymunk_sprite import PymunkSprite
 from ise.app.resource import Resource
 
 
@@ -8,12 +9,12 @@ class PhysicEntity(Entity):
     def __init__(self,
                  position: tuple = (200, 200)) -> None:
 
-        position = PymunkPos(position=position, va=1800)
-        position.create_surface_shape(Resource.image["stock"]["face"], radius=-2)
+        position = PymunkPos(position=position, va=0, base_shape_friction=2)
+        position.create_surface_shape(Resource.image["stock"]["face"], radius=0)
 
-        sprite = SimpleSprite(Resource.image["stock"]["face"], rendering_technique="rotated")
+        real_surf = Resource.image["stock"]["face"]
+        pymunk_surf = PymunkSprite(position, "rotated").surface
 
-        sprite.set_rendering_technique("rotated")
+        sprite = AnimatedSprite([real_surf, pymunk_surf], "rotated", [0.1, 0.1])
 
         super().__init__(position, sprite)
-

@@ -1,6 +1,5 @@
 import pygame
 
-from ise.app import Resource
 from ise.instance import LoopHandler, BaseInstance
 from ise.environment.scene import Scene
 
@@ -24,41 +23,47 @@ class TestInstance(BaseInstance):
 
         self.scene.add_entities(self.physic_entity)
         self.scene.add_entities(origin_entity)
+        self.create_walls()
 
-        def spawn_entity() -> None:
-            print("Spawning!")
-            spawn_point = pygame.math.Vector2(pygame.mouse.get_pos()) + self.scene.camera.position.position
-            physic_entity = PhysicEntity(position=spawn_point)
-            debug_entity = RotatingEntity()
-            debug_entity.position = physic_entity.position
-            self.scene.add_entities(physic_entity, debug_entity)
-
-        def clean_entities() -> None:
-            self.scene.space.remove(*self.scene.space.bodies, *self.scene.space.shapes)
-
+        self.event_handler.register_keydown_callback(pygame.K_s, self.shake)
         self.event_handler.register_keydown_callback(pygame.K_w, self.create_walls)
-        self.event_handler.register_keydown_callback(pygame.K_c, clean_entities)
-        self.event_handler.register_buttondown_callback(1, spawn_entity)
+        self.event_handler.register_keydown_callback(pygame.K_c, self.clean_entities)
+        self.event_handler.register_buttondown_callback(1, self.spawn_entity)
+        self.event_handler.register_buttonpressed_callback(1, self.move_camera)
 
-        def move_camera() -> None:
-            self.scene.camera.position.position -= pygame.math.Vector2(self.event_handler.mouse_rel)/3
+    async def loop(self):
+        self.event_handler.handle_events()
+        self.scene.update(LoopHandler.delta)
 
-        self.event_handler.register_buttonpressed_callback(1, move_camera)
+        self.window.fill((127, 127, 127))
+        self.scene.render()
+        pygame.display.flip()
 
+    # Callbacks
     def create_walls(self):
         self.scene.add_entities(FloorEntity())
         self.scene.add_entities(FloorEntity(pygame.Rect(0, 0, 20, 300)))
         self.scene.add_entities(FloorEntity(pygame.Rect(380, 0, 20, 300)))
         self.scene.add_entities(FloorEntity(pygame.Rect(0, 0, 400, 20)))
 
-    async def loop(self):
-        self.event_handler.handle_events()
+    def move_camera(self) -> None:
+        self.scene.camera.position.position -= pygame.math.Vector2(self.event_handler.mouse_rel)/3
 
-        self.scene.update(LoopHandler.delta)
-        self.window.fill((127, 127, 127))
-        self.scene.render()
+    def clean_entities(self) -> None:
+        self.scene.space.remove(*self.scene.space.bodies, *self.scene.space.shapes)
+        self.scene.entities.clear()
 
-        pygame.display.flip()
+    def shake(self) -> None:
+        for body in self.scene.space.bodies:
+            body.apply_impulse_at_world_point((0, -10000000), body.position)
+
+    def spawn_entity(self) -> None:
+        for i in range(20):
+            spawn_point = pygame.math.Vector2(pygame.mouse.get_pos()) + self.scene.camera.position.position
+            physic_entity = PhysicEntity(position=spawn_point)
+            debug_entity = RotatingEntity()
+            debug_entity.position = physic_entity.position
+            self.scene.add_entities(physic_entity, debug_entity)
 
 
 if __name__ == '__main__':

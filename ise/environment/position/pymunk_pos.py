@@ -1,8 +1,10 @@
 import math
+import typing
+
 import pygame
 import pymunk
 
-from pymunk.autogeometry import march_soft
+from pymunk.autogeometry import march_soft, march_hard
 from collections.abc import Iterable, Sequence
 
 from ise.environment.position.advanced_pos import AdvancedPos
@@ -91,6 +93,7 @@ class PymunkPos(AdvancedPos):
     def create_surface_shape(self,
                              surface: pygame.Surface,
                              offset: Sequence[float, float] = (0, 0),
+                             march_type: typing.Literal["soft", "hard"] = "soft",
                              radius: float = -1,
                              density: float = None,
                              friction: float = None,
@@ -104,11 +107,22 @@ class PymunkPos(AdvancedPos):
             return surface_array[int(_point[0]), int(_point[1]), 0]
 
         # First decomposition
-        polygons = list(march_soft(surface_bounding_box,
-                                   size[0],
-                                   size[1],
-                                   0.5,
-                                   sample_function))
+        if march_type == "soft":
+            polygons = list(march_soft(surface_bounding_box,
+                                       int(size[0]*0.4),
+                                       int(size[1]*0.4),
+                                       0,
+                                       sample_function))
+
+        elif march_type == "hard":
+            polygons = list(march_hard(surface_bounding_box,
+                                       int(size[0]*0.4),
+                                       int(size[1]*0.4),
+                                       0,
+                                       sample_function))
+
+        else:
+            raise Exception("Invalid march type")
 
         for i in range(len(polygons)):
             polygon = polygons[i]
