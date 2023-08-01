@@ -1,11 +1,11 @@
 import asyncio
 
-from ise.app.app import App
-from ise.instance.splash_screen import Splash
+from isec.app.app import App
+from isec.instance.splash_screen import Splash
 
 
 async def main():
-    App.init("assets/")
+    App.init("isec/assets/")
     x = Splash()
     await x.execute()
 

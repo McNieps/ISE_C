@@ -1,9 +1,9 @@
 import random
 
-from ise.environment.entity import Entity
-from ise.environment.sprite import SimpleSprite
-from ise.environment.position import AdvancedPos
-from ise.app.resource import Resource
+from isec.environment.entity import Entity
+from isec.environment.sprite import SimpleSprite
+from isec.environment.position import AdvancedPos
+from isec.app.resource import Resource
 
 
 class CachedSurfEntity(Entity):

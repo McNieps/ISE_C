@@ -1,6 +1,6 @@
-from ise.environment.entity import Entity
-from ise.environment.sprite import DebugSprite
-from ise.environment.position import StaticPos
+from isec.environment.entity import Entity
+from isec.environment.sprite import DebugSprite
+from isec.environment.position import StaticPos
 
 
 class OriginEntity(Entity):

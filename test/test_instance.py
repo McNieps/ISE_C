@@ -1,7 +1,7 @@
 import pygame
 
-from ise.instance import LoopHandler, BaseInstance
-from ise.environment.scene import Scene
+from isec.instance import LoopHandler, BaseInstance
+from isec.environment.scene import Scene
 
 from rotating_entity import RotatingEntity
 from physic_entity import PhysicEntity
@@ -39,7 +39,7 @@ class TestInstance(BaseInstance):
         self.scene.render()
         pygame.display.flip()
 
-    # Callbacks
+    # region Callback
     def create_walls(self):
         self.scene.add_entities(FloorEntity())
         self.scene.add_entities(FloorEntity(pygame.Rect(0, 0, 20, 300)))
@@ -64,16 +64,17 @@ class TestInstance(BaseInstance):
             debug_entity = RotatingEntity()
             debug_entity.position = physic_entity.position
             self.scene.add_entities(physic_entity, debug_entity)
+    # endregion
 
 
 if __name__ == '__main__':
     import asyncio
 
-    from ise.app.app import App
+    from isec.app.app import App
 
 
     async def main():
-        App.init("../assets/")
+        App.init("../isec/assets/")
         x = TestInstance()
         await x.execute()
 

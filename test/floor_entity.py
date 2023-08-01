@@ -1,10 +1,10 @@
 import pygame
 
-from ise.environment import Entity
-from ise.environment.position import PymunkPos
-from ise.environment.sprite import AnimatedSprite
-from ise.environment.sprite.pymunk_sprite import PymunkSprite
-from ise.app.resource import Resource
+from isec.environment import Entity
+from isec.environment.position import PymunkPos
+from isec.environment.sprite import AnimatedSprite
+from isec.environment.sprite.pymunk_sprite import PymunkSprite
+from isec.app.resource import Resource
 
 
 class FloorEntity(Entity):

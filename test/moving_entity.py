@@ -1,8 +1,8 @@
 import random
 
-from ise.environment.entity import Entity
-from ise.environment.sprite import DebugSprite
-from ise.environment.position import SimplePos
+from isec.environment.entity import Entity
+from isec.environment.sprite import DebugSprite
+from isec.environment.position import SimplePos
 
 
 class MovingEntity(Entity):
