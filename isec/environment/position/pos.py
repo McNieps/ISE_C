@@ -29,3 +29,7 @@ class Pos:
         self.va = va
         self.aa = aa
         self.a_damping = a_damping
+
+    def update(self,
+               delta: float) -> None:
+        pass

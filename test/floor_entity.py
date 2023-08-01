@@ -4,12 +4,14 @@ from isec.environment import Entity
 from isec.environment.position import PymunkPos
 from isec.environment.sprite import AnimatedSprite
 from isec.environment.sprite.pymunk_sprite import PymunkSprite
-from isec.app.resource import Resource
 
 
 class FloorEntity(Entity):
     def __init__(self,
-                 rect: pygame.Rect = pygame.Rect(0, 280, 400, 20)) -> None:
+                 rect: pygame.Rect = None) -> None:
+
+        if rect is None:
+            rect = pygame.Rect(0, 280, 400, 20)
 
         self.rect = rect
         position = PymunkPos(position=rect.center, base_shape_friction=5, body_type=PymunkPos.TYPE_STATIC)

@@ -9,5 +9,5 @@ setup(name='isec',
       install_requires=['pygame-ce', 'pymunk', 'numpy'],
       include_package_data=True,
       packages=[*find_packages()],
-      package_data={'isec': ["assets/*", "assets/*/*", "assets/*/*/*"]}
+      package_data={'isec': ["assets/*", "assets/*/*", "assets/*/*/*"]},
       )

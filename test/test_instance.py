@@ -2,6 +2,7 @@ import pygame
 
 from isec.instance import LoopHandler, BaseInstance
 from isec.environment.scene import Scene
+from isec.gui.button import Button
 
 from rotating_entity import RotatingEntity
 from physic_entity import PhysicEntity
@@ -31,6 +32,8 @@ class TestInstance(BaseInstance):
         self.event_handler.register_buttondown_callback(1, self.spawn_entity)
         self.event_handler.register_buttonpressed_callback(1, self.move_camera)
 
+        self.scene.add_entities(Button())
+
     async def loop(self):
         self.event_handler.handle_events()
         self.scene.update(LoopHandler.delta)
@@ -58,7 +61,7 @@ class TestInstance(BaseInstance):
             body.apply_impulse_at_world_point((0, -10000000), body.position)
 
     def spawn_entity(self) -> None:
-        for i in range(20):
+        for _ in range(20):
             spawn_point = pygame.math.Vector2(pygame.mouse.get_pos()) + self.scene.camera.position.position
             physic_entity = PhysicEntity(position=spawn_point)
             debug_entity = RotatingEntity()

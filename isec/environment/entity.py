@@ -2,16 +2,16 @@ import pygame
 
 from collections.abc import Iterable
 
-from isec.environment.position import StaticPos
+from isec.environment.position import Pos
 from isec.environment.sprite import SimpleSprite
 
 
 class Entity:
     def __init__(self,
-                 position: StaticPos,
+                 position: Pos,
                  sprite: SimpleSprite) -> None:
 
-        self.position: StaticPos = position
+        self.position: Pos = position
         self.sprite: SimpleSprite = sprite
 
     def update(self,
