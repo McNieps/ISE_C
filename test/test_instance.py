@@ -21,6 +21,7 @@ class TestInstance(BaseInstance):
 
         self.scene = Scene(self.window)
         self.scene.space.gravity = (0, 500)
+        self.scene.space.damping = 2
 
         self.scene.add_entities(self.physic_entity)
         self.scene.add_entities(origin_entity)
@@ -32,7 +33,7 @@ class TestInstance(BaseInstance):
         self.event_handler.register_buttondown_callback(1, self.spawn_entity)
         self.event_handler.register_buttonpressed_callback(1, self.move_camera)
 
-        self.scene.add_entities(Button())
+        self.scene.add_entities(Button(linked_instance=self, linked_scene=self.scene))
 
     async def loop(self):
         self.event_handler.handle_events()

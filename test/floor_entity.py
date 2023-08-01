@@ -14,7 +14,11 @@ class FloorEntity(Entity):
             rect = pygame.Rect(0, 280, 400, 20)
 
         self.rect = rect
-        position = PymunkPos(position=rect.center, base_shape_friction=5, body_type=PymunkPos.TYPE_STATIC)
+        position = PymunkPos(position=rect.center,
+                             base_shape_friction=1,
+                             base_shape_elasticity=1,
+                             body_type=PymunkPos.TYPE_STATIC)
+
         real_surface = pygame.Surface(rect.size)
         real_surface.fill((255, 50, 100))
         pygame.draw.rect(real_surface, (0, 0, 0), (0, 0, *rect.size), 5)  # Draw the outline of the rectangle
@@ -32,4 +36,3 @@ class FloorEntity(Entity):
         sprite.set_rendering_technique("static")
 
         super().__init__(position, sprite)
-

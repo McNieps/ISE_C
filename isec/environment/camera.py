@@ -18,3 +18,8 @@ class Camera:
                    position: StaticPos) -> pygame.math.Vector2:
 
         return position.position - self.position.position
+
+    def get_coordinates_from_screen(self,
+                                    screen_coordinates: pygame.math.Vector2) -> pygame.math.Vector2:
+
+        return screen_coordinates + self.position.position
