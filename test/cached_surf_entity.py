@@ -1,6 +1,6 @@
 import random
 
-from isec.environment.entity import Entity
+from isec.environment.base.entity import Entity
 from isec.environment.sprite import SimpleSprite
 from isec.environment.position import AdvancedPos
 from isec.app.resource import Resource

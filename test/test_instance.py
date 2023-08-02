@@ -1,7 +1,7 @@
 import pygame
 
 from isec.instance import LoopHandler, BaseInstance
-from isec.environment.scene import Scene
+from isec.environment.scene.entity_scene import EntityScene
 from isec.gui.button import Button
 
 from rotating_entity import RotatingEntity
@@ -17,7 +17,7 @@ class TestInstance(BaseInstance):
         self.physic_entity = PhysicEntity()
         origin_entity.position = self.physic_entity.position
 
-        self.scene = Scene(self.window)
+        self.scene = EntityScene(self.window)
         self.scene.space.gravity = (0, 100)
 
         self.scene.add_entities(self.physic_entity)
@@ -27,7 +27,7 @@ class TestInstance(BaseInstance):
         self.event_handler.register_keydown_callback(pygame.K_s, self.shake)
         self.event_handler.register_keydown_callback(pygame.K_w, self.create_walls)
         self.event_handler.register_keydown_callback(pygame.K_c, self.clean_entities)
-        # self.event_handler.register_buttondown_callback(1, self.spawn_entity)
+        self.event_handler.register_buttondown_callback(1, self.spawn_entity)
         self.event_handler.register_buttonpressed_callback(2, self.move_camera)
 
         self.new_button = Button(linked_instance=self, linked_scene=self.scene)

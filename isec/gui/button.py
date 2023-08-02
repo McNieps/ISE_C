@@ -3,14 +3,14 @@ import typing
 import pygame.mouse
 
 from isec.app import Resource
-from isec.environment import Entity, sprite, position, Scene
+from isec.environment import Entity, sprite, position, EntityScene
 from isec.instance import BaseInstance
 
 
 class Button(Entity):
     def __init__(self,
                  linked_instance: BaseInstance,
-                 linked_scene: Scene,
+                 linked_scene: EntityScene,
                  button_position: position.Pos = None,
                  button_sprite: sprite.SimpleSprite = None,
                  up_callback: typing.Callable[[], None] = None,

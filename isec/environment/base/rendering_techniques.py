@@ -1,9 +1,12 @@
 import pygame
+import typing
 
 from collections.abc import Iterable
 
 
 class RenderingTechniques:
+    TYPING = typing.Literal["static", "rotated", "cached"]
+
     @staticmethod
     def static(self,
                destination: pygame.Surface,

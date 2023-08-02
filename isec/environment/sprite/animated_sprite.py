@@ -1,14 +1,14 @@
 import pygame
 import typing
 
-from isec.environment.sprite.simple_sprite import SimpleSprite
+from isec.environment.base import Sprite, RenderingTechniques
 
 
-class AnimatedSprite(SimpleSprite):
+class AnimatedSprite(Sprite):
     def __init__(self,
                  surfaces: list[pygame.Surface],
-                 rendering_technique: typing.Literal["static", "rotated", "cached"],
                  frame_durations: list[float],
+                 rendering_technique: RenderingTechniques.TYPING,
                  loop: bool = True) -> None:
 
         if len(surfaces) == 0:

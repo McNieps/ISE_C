@@ -1,4 +1,4 @@
-from isec.environment.entity import Entity
+from isec.environment.base.entity import Entity
 from isec.environment.sprite import DebugSprite
 from isec.environment.position import AdvancedPos
 
