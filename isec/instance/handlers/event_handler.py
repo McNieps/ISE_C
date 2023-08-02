@@ -49,9 +49,9 @@ class EventHandler:
                                         button: int,
                                         callback: typing.Callable) -> None:
         """Registers a callback to be called when the button is pressed."""
-        if button not in self._buttonpressed_callbacks:
-            self._buttonpressed_callbacks[button] = []
-        self._buttonpressed_callbacks[button].append(callback)
+        if button-1 not in self._buttonpressed_callbacks:
+            self._buttonpressed_callbacks[button-1] = []
+        self._buttonpressed_callbacks[button-1].append(callback)
 
     def register_buttondown_callback(self,
                                      button: int,

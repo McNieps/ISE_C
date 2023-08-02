@@ -1,6 +1,5 @@
 import pygame
 
-from isec.app import Resource
 from isec.instance import LoopHandler, BaseInstance
 from isec.environment.scene import Scene
 from isec.gui.button import Button
@@ -14,7 +13,6 @@ class TestInstance(BaseInstance):
     def __init__(self):
         super().__init__(fps=120)
 
-        print(Resource.data["image"])
         origin_entity = RotatingEntity()
         self.physic_entity = PhysicEntity()
         origin_entity.position = self.physic_entity.position
@@ -29,10 +27,12 @@ class TestInstance(BaseInstance):
         self.event_handler.register_keydown_callback(pygame.K_s, self.shake)
         self.event_handler.register_keydown_callback(pygame.K_w, self.create_walls)
         self.event_handler.register_keydown_callback(pygame.K_c, self.clean_entities)
-        self.event_handler.register_buttondown_callback(1, self.spawn_entity)
-        self.event_handler.register_buttonpressed_callback(1, self.move_camera)
+        # self.event_handler.register_buttondown_callback(1, self.spawn_entity)
+        self.event_handler.register_buttonpressed_callback(2, self.move_camera)
 
-        self.scene.add_entities(Button(linked_instance=self, linked_scene=self.scene))
+        self.new_button = Button(linked_instance=self, linked_scene=self.scene)
+        self.new_button.position = self.physic_entity.position
+        self.scene.add_entities(self.new_button)
 
     async def loop(self):
         self.scene.update(LoopHandler.delta)
@@ -78,6 +78,5 @@ if __name__ == '__main__':
         App.init("../isec/assets/")
         x = TestInstance()
         await x.execute()
-
 
     asyncio.run(main())
