@@ -1,5 +1,6 @@
 import pygame
 
+from isec.app import Resource
 from isec.instance import LoopHandler, BaseInstance
 from isec.environment.scene import Scene
 from isec.gui.button import Button
@@ -11,17 +12,15 @@ from floor_entity import FloorEntity
 
 class TestInstance(BaseInstance):
     def __init__(self):
-        super().__init__()
-        self.fps = 120
-        self.window = pygame.display.get_surface()
+        super().__init__(fps=120)
 
+        print(Resource.data["image"])
         origin_entity = RotatingEntity()
         self.physic_entity = PhysicEntity()
         origin_entity.position = self.physic_entity.position
 
         self.scene = Scene(self.window)
-        self.scene.space.gravity = (0, 500)
-        self.scene.space.damping = 2
+        self.scene.space.gravity = (0, 100)
 
         self.scene.add_entities(self.physic_entity)
         self.scene.add_entities(origin_entity)
@@ -36,12 +35,10 @@ class TestInstance(BaseInstance):
         self.scene.add_entities(Button(linked_instance=self, linked_scene=self.scene))
 
     async def loop(self):
-        self.event_handler.handle_events()
         self.scene.update(LoopHandler.delta)
 
         self.window.fill((127, 127, 127))
         self.scene.render()
-        pygame.display.flip()
 
     # region Callback
     def create_walls(self):
@@ -62,7 +59,7 @@ class TestInstance(BaseInstance):
             body.apply_impulse_at_world_point((0, -10000000), body.position)
 
     def spawn_entity(self) -> None:
-        for _ in range(20):
+        for _ in range(1):
             spawn_point = pygame.math.Vector2(pygame.mouse.get_pos()) + self.scene.camera.position.position
             physic_entity = PhysicEntity(position=spawn_point)
             debug_entity = RotatingEntity()

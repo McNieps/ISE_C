@@ -21,9 +21,6 @@ class LoopHandler:
                             fps: int):
 
         cls.delta = cls._clock.tick(fps) / 1000
-        pygame.display.set_caption(f"{cls._clock.get_fps():.1f} - "
-                                   f"{len(cls.stack)} - "
-                                   f"{str([inst.__class__.__name__ for inst in cls.stack])}")
         return cls.delta
 
     @classmethod
@@ -51,3 +48,10 @@ class LoopHandler:
                 return
 
         raise InvalidInstanceError(f"There is no instance in stack with name: {instance_name}")
+
+    @classmethod
+    def get_stack(cls,
+                  raw: bool = False) -> list[str]:
+        if raw:
+            return cls.stack
+        return [inst.__class__.__name__ for inst in cls.stack]
