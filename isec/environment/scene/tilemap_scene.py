@@ -22,8 +22,6 @@ class TilemapScene(Scene):
         self.tile_size = self.tileset[0].get_size()[0]
         self._inter_tile_distance = 0
 
-        print(Resource.data)
-
         if not self._check_tileset_validity():
             raise ValueError("Invalid tileset")
 
