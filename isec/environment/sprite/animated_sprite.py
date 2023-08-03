@@ -7,8 +7,9 @@ class AnimatedSprite(Sprite):
     def __init__(self,
                  surfaces: list[pygame.Surface],
                  frame_durations: list[float],
-                 rendering_technique: RenderingTechniques.TYPING,
-                 loop: bool = True) -> None:
+                 loop: bool = True,
+                 rendering_technique: RenderingTechniques.TYPING = "static",
+                 blit_flag: int = 0) -> None:
 
         if len(surfaces) == 0:
             raise ValueError("Length of surfaces must be greater than 0.")
@@ -22,7 +23,9 @@ class AnimatedSprite(Sprite):
         if not all(duration > 0 for duration in frame_durations):
             raise ValueError("All frame_durations must be greater than 0.")
 
-        super().__init__(surfaces[0], rendering_technique)
+        super().__init__(surface=surfaces[0],
+                         rendering_technique=rendering_technique,
+                         blit_flag=blit_flag)
 
         self.surfaces: list[pygame.Surface] = surfaces
         self.frame_durations: list[float] = frame_durations

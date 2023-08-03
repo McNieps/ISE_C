@@ -33,7 +33,7 @@ class TestInstance(BaseInstance):
         self.scene = TilemapScene(Resource.data["maps"]["stock"], tile_set)
         self.top_scene = EntityScene()
         self.test_entity = Entity(SimplePos(), SimpleSprite(Resource.image["stock"]["face"],
-                                                            pygame.BLEND_SUB))
+                                                            blit_flag=pygame.BLEND_SUB))
         self.top_scene.add_entities(self.test_entity)
 
         self.event_handler.register_buttonpressed_callback(2, self.move_camera)

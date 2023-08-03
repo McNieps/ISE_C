@@ -8,7 +8,8 @@ from isec.environment.position.pymunk_pos import PymunkPos
 class PymunkSprite(Sprite):
     def __init__(self,
                  pymunk_pos: PymunkPos,
-                 rendering_technique: RenderingTechniques.TYPING) -> None:
+                 rendering_technique: RenderingTechniques.TYPING = "static",
+                 blit_flag: int = 0,) -> None:
 
         if len(pymunk_pos.shapes) == 0:
             raise ValueError("PymunkPos must have at least one shape")
@@ -40,5 +41,6 @@ class PymunkSprite(Sprite):
 
         #
 
-        super().__init__(surface,
-                         rendering_technique)
+        super().__init__(surface=surface,
+                         rendering_technique=rendering_technique,
+                         blit_flag=blit_flag)

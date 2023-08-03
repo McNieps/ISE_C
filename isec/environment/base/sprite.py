@@ -15,13 +15,14 @@ class Sprite:
                  "effective_surf",
                  "effective_rect",
                  "_rendering_technique",
-                 "blit_flags"]
+                 "blit_flag"]
 
     def __init__(self,
                  surface: pygame.Surface,
-                 blit_flag: int = 0,
-                 rendering_technique: RenderingTechniques.TYPING = "static") -> None:
+                 rendering_technique: RenderingTechniques.TYPING = "static",
+                 blit_flag: int = 0,) -> None:
 
+        print(blit_flag)
         self.surface = surface
         self.rect = self.surface.get_rect()
         self.max_rect = self.rect.copy()
@@ -34,7 +35,7 @@ class Sprite:
 
         self._rendering_technique = RenderingTechniques.static
         self.set_rendering_technique(rendering_technique)
-        self.blit_flags = blit_flag
+        self.blit_flag = blit_flag
 
     def update(self,
                delta: float) -> None:

@@ -3,7 +3,9 @@ import typing
 import pygame.mouse
 
 from isec.app import Resource
-from isec.environment import Entity, sprite, position, EntityScene
+from isec.environment import Entity, EntityScene
+from isec.environment.base import Sprite, Pos
+from isec.environment.position import SimplePos
 from isec.instance import BaseInstance
 
 
@@ -11,8 +13,8 @@ class Button(Entity):
     def __init__(self,
                  linked_instance: BaseInstance,
                  linked_scene: EntityScene,
-                 button_position: position.Pos = None,
-                 button_sprite: sprite.SimpleSprite = None,
+                 button_position: Pos = None,
+                 button_sprite: Sprite = None,
                  up_callback: typing.Callable[[], None] = None,
                  down_callback: typing.Callable[[], None] = None,
                  pressed_callback: typing.Callable[[], None] = None) -> None:
@@ -21,10 +23,11 @@ class Button(Entity):
         self.linked_scene = linked_scene
 
         if button_position is None:
-            button_position = position.SimplePos()
+            button_position = SimplePos()
         if button_sprite is None:
-            button_sprite = sprite.SimpleSprite(Resource.image["stock"]["button"],
-                                                "static")
+            button_sprite = Sprite(surface=Resource.image["stock"]["button"],
+                                   rendering_technique="static")
+
         super().__init__(button_position, button_sprite)
 
         if up_callback is None:

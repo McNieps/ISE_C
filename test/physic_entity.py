@@ -13,8 +13,9 @@ class PhysicEntity(Entity):
         position.create_surface_shape(Resource.image["stock"]["face"], radius=0)
 
         real_surf = Resource.image["stock"]["face"]
-        pymunk_surf = PymunkSprite(position, "static").surface
+        pymunk_surf = PymunkSprite(position, "rotated").surface
 
-        sprite = AnimatedSprite([real_surf, pymunk_surf], [0.9, 0.1], "rotated")
+        sprite = AnimatedSprite([real_surf, pymunk_surf], [0.9, 0.1],
+                                rendering_technique="rotated")
 
         super().__init__(position, sprite)
