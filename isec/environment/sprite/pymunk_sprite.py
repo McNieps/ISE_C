@@ -1,6 +1,5 @@
 import pygame
 import pymunk
-import typing
 
 from isec.environment.base import Sprite, RenderingTechniques
 from isec.environment.position.pymunk_pos import PymunkPos

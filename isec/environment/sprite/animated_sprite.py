@@ -1,5 +1,4 @@
 import pygame
-import typing
 
 from isec.environment.base import Sprite, RenderingTechniques
 

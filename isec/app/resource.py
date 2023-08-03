@@ -128,9 +128,6 @@ class Resource:
                     with open(assets_path + elem.name) as index_image:
                         image_dict = json.load(index_image)
 
-                    # if elem.name not in current_data_dict:
-                    #     current_data_dict[elem.name] = {}
-
                     current_data_dict |= image_dict
 
                 elif any(elem.name.endswith(ext) for ext in [".png", ".jpg"]):
@@ -176,7 +173,6 @@ class Resource:
                 else:
                     raise InvalidFileFormatError(f"{elem.name.split('.')[-1]} is not a supported data file format")
 
-
     @classmethod
     def _cache(cls,
                surf_dict: dict = None,
@@ -211,4 +207,3 @@ class Resource:
             cache_size = cls.data["engine"]["resource"]["surface"]["caching"]["default_size"]
 
         return CachedSurface(surf, cache_size)
-

@@ -20,7 +20,7 @@ class RenderingTechniques:
         if not self.effective_rect.colliderect(destination_rect):
             return
 
-        destination.blit(self.surface, self.effective_rect)
+        destination.blit(self.surface, self.effective_rect, special_flags=self.blit_flags)
 
     @staticmethod
     def rotated(self,

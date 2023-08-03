@@ -12,3 +12,4 @@ class Scene:
 
         self.camera = Camera()
         self.surface = surface
+        self.rect = self.surface.get_rect()
