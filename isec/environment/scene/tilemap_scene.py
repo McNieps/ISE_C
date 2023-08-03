@@ -1,8 +1,8 @@
 import pygame
 import numpy
 import math
-import time
 
+from isec.app import Resource
 from isec.environment.base.scene import Scene, Camera
 
 
@@ -21,6 +21,8 @@ class TilemapScene(Scene):
         self.tileset = tileset
         self.tile_size = self.tileset[0].get_size()[0]
         self._inter_tile_distance = 0
+
+        print(Resource.data)
 
         if not self._check_tileset_validity():
             raise ValueError("Invalid tileset")

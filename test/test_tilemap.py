@@ -2,6 +2,7 @@ import pygame
 import numpy
 import time
 
+from isec.app import Resource
 from isec.instance import LoopHandler, BaseInstance
 from isec.environment.scene import TilemapScene
 
@@ -17,8 +18,8 @@ def draw_circle(_tilemap: list[list[int]],
                 _tilemap[j][i] = tile
 
 
-tile_map = [[0 for _ in range(400)] for _ in range(300)]
-draw_circle(tile_map, 50, 50, 16, 0)
+tile_map = [[0 for _ in range(400)] for _ in range(38)]
+# draw_circle(tile_map, 50, 50, 16, 0)
 tile_set = {-1: None, 0: pygame.Surface((8, 8))}
 pygame.draw.circle(tile_set[0], (255, 255, 255), (4, 4), 4)
 
@@ -27,7 +28,7 @@ class TestInstance(BaseInstance):
     def __init__(self):
         super().__init__(fps=1200)
 
-        self.scene = TilemapScene(tile_map, tile_set)
+        self.scene = TilemapScene(Resource.data["maps"]["stock"], tile_set)
 
         self.event_handler.register_buttonpressed_callback(2, self.move_camera)
         self.event_handler.register_buttondown_callback(4, self.increment_inter_tile)
@@ -37,10 +38,8 @@ class TestInstance(BaseInstance):
         self.scene.update(LoopHandler.delta)
         LoopHandler.fps_caption()
         self.window.fill((127, 127, 127))
-        t = time.time()
-        for i in range(1000):
-            self.scene.render()
-        print((time.time()-t)/1000)
+
+        self.scene.render()
 
     # region Callback
     def move_camera(self) -> None:
